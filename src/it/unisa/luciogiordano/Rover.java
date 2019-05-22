@@ -31,25 +31,25 @@ public class Rover {
 			this.planet = planet;
 		}}
 
-	public String turn(String direct) throws InvalidInputException {
+	private String turn(String direct) throws InvalidInputException {
 		if(direct == "l") {
-			if(direction == "n" || direction == "N")
-				this.direction = "w";
-			else if(direction == "w" || direction == "W")
-				this.direction ="s";
-			else if(direction == "s" || direction == "S")
-				this.direction = "e";
-			else if(direction == "e" || direction == "E")
-				this.direction = "n";
+			if(direction == "N")
+				this.direction = "W";
+			else if(direction == "W")
+				this.direction ="S";
+			else if(direction == "S")
+				this.direction = "E";
+			else if(direction == "E")
+				this.direction = "N";
 		}else if(direct == "r") {
-			if(direction == "n" || direction == "N")
-				this.direction = "e";
-			else if(direction == "w" || direction == "W")
-				this.direction = "n";
-			else if(direction == "s" || direction == "S")
-				this.direction = "w";
-			else if(direction == "e" || direction == "E")
-				this.direction = "s";
+			if(direction == "N")
+				this.direction = "E";
+			else if(direction == "W")
+				this.direction = "N";
+			else if(direction == "S")
+				this.direction = "W";
+			else if(direction == "E")
+				this.direction = "S";
 		}else {
 			throw new InvalidInputException();
 		}
@@ -58,30 +58,21 @@ public class Rover {
 	}
 
 
-	public String moreMoves(String s) throws InvalidInputException{
+	public String move(String s) throws InvalidInputException{
 		String obstaclesFound ="";
-
-		for (int i = 0; i < s.length()-1; i++){
+		for (int i = 0; i < s.length(); i++){
 			char c = s.charAt(i);
-			move(""+c);
+			checkMove(""+c);
 		}
-		String stringToReturn = move(""+s.charAt(s.length()-1));
-
-
 		for(int i =0; i<obstacles.size();i++) {
 			if(!obstaclesFound.contains((obstacles.get(i)).getCoordinates())){
 				obstaclesFound += obstacles.get(i).getCoordinates();
 			}
 		}
-		/**for(Obstacle ob : obstacles) {
-			if(!obstaclesFound.contains(ob.getCoordinates()))
-				obstaclesFound += ob.getCoordinates();
-		}*/
-		return  stringToReturn + obstaclesFound;
-
+		return  status() + obstaclesFound;
 	}
 
-	public String move(String s) throws InvalidInputException {
+	private String checkMove(String s) throws InvalidInputException {
 		if(s.equals("f")) {
 			return moveForward();
 		}else if(s.equals("b")) {
@@ -91,33 +82,33 @@ public class Rover {
 		}else if(s.equals("l")) {
 			return turn("l");
 		}else {
-			return "";
+			throw new InvalidInputException();
 		}
 	}
 
 
-	public String moveForward() {
+	private String moveForward() {
 		int saveY = this.y;
 		int saveX = this.x;
-		if(direction == "s") {
+		if(direction == "S") {
 			if(y == 0) {
 				y=planet.getSize()-1;
 			}else {
 				y -= 1;
 			}
-		}else if(direction == "w") {
+		}else if(direction == "W") {
 			if( x == 0) {
 				x = planet.getSize()-1;
 			}else {
 				x -= 1;
 			}
-		}else if(direction == "n") {
+		}else if(direction == "N") {
 			if(y == planet.getSize()-1) {
 				y = 0;
 			}else {
 				y += 1;
 			}
-		}else if(direction == "e") {
+		}else if(direction == "E") {
 			if(x == planet.getSize()-1) {
 				x = 0;
 			}else {
@@ -126,7 +117,6 @@ public class Rover {
 		}
 		if(planet.cellIsObstacle(x, y)){
 			obstacles.add(new Obstacle(x,y));
-			//System.out.println(obstacles.size());
 			x=saveX;
 			y=saveY;
 			return "("+Integer.toString(saveX)+","+Integer.toString(saveY)+","+direction+")";
@@ -134,29 +124,29 @@ public class Rover {
 			return "("+Integer.toString(x)+","+Integer.toString(y)+","+direction+")";
 		}
 	}
-	public String moveBackward() {
+	
+	private String moveBackward() {
 		int saveY=this.y;
 		int saveX=this.x;
-
-		if(direction == "s") {
-			if(y == planet.getSize()) {
+		if(direction == "S") {
+			if(y == planet.getSize()-1) {
 				y = 0;
 			}else {
 				y += 1;
 			}
-		}else if(direction == "w") {
+		}else if(direction == "W") {
 			if( x == planet.getSize()-1) {
 				x = 0;
 			}else {
 				x += 1;
 			}
-		}else if(direction == "n") {
+		}else if(direction == "N") {
 			if(y == 0) {
 				y = planet.getSize()-1;
 			}else {
 				y -= 1;
 			}
-		}else if(direction == "e") {
+		}else if(direction == "E") {
 			if(x == 0) {
 				x = planet.getSize()-1;
 			}else {
@@ -165,14 +155,12 @@ public class Rover {
 		}
 		if(planet.cellIsObstacle(x, y)){
 			obstacles.add(new Obstacle(x,y));
-			//System.out.println(obstacles.size());
 			x=saveX;
 			y=saveY;
 			return "("+Integer.toString(saveX)+","+Integer.toString(saveY)+","+direction+")";
 		}else {
 			return "("+Integer.toString(x)+","+Integer.toString(y)+","+direction+")";
 		}
-
 	}
 
 	private void land() {
@@ -180,12 +168,7 @@ public class Rover {
 		this.y = 0;
 		this.direction = "N";
 	}
-	public String getCommand(String s) {
-		if (s.equals("")) {
-			return status();
-		}
-		return "";
-	}
+
 	private String status() {
 		return "("+Integer.toString(x) +","+Integer.toString(y)+","+direction+")";
 	}

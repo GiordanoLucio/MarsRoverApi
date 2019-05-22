@@ -15,9 +15,12 @@ public class Planet {
 		this.obstacles=null;
 	}
 	
-	public Planet(int[][] x, ArrayList<Obstacle> obstacles) {
+	public Planet(int[][] grid, ArrayList<Obstacle> obstacles) {
 		this.grid= grid;
 		this.obstacles = obstacles;
+		for(Obstacle ob : obstacles) {
+			setObstacle(ob.getX(), ob.getY());
+		}
 	}
 	
 	public int getSize() {
@@ -30,7 +33,8 @@ public class Planet {
 			return true;
 		}
 	}
-	public void setObstacle(int x, int y) {
+	
+	private void setObstacle(int x, int y) {
 		grid[x][y] = 1;
 	}
 	

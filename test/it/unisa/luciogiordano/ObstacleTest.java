@@ -10,4 +10,15 @@ public class ObstacleTest {
 		Obstacle obstacle = new Obstacle(1,1);
 		assertEquals(obstacle.getCoordinates(), "(1,1)");
 	}
+	@Test
+	public void testGetX() {
+		Obstacle obstacle = new Obstacle(1,1);
+		assertEquals(obstacle.getX(), 1);
+	}
+	@Test
+	public void testGetY() {
+		Obstacle obstacle = new Obstacle(1,1);
+		assertEquals(obstacle.getY(), 1);
+	}
 }
+
