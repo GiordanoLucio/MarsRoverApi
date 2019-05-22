@@ -19,12 +19,13 @@ public class Rover {
 	public Rover(int x, int y, String direction) {
 		this.x = x;
 		this.y = y;
-		this.direction = direction;
+		this.direction = direction.toUpperCase();
 	}
 	public Rover (int x, int y, String direction, Planet planet) throws InvalidInputException {
 		this.x = x;
 		this.y = y;
-		this.direction = direction;
+		this.direction = direction.toUpperCase();
+		
 		if(x>planet.getSize()-1) {
 			throw new InvalidInputException();
 		}else {

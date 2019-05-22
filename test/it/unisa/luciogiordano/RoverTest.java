@@ -10,7 +10,7 @@ public class RoverTest {
 
 	@Test
 	public void test() {
-		Rover rover = new Rover();
+		new Rover();
 	}
 
 	@Test
@@ -23,27 +23,34 @@ public class RoverTest {
 
 	@Test
 	public void testNewRoverConstructor() throws InvalidInputException{
-		Rover rover = new Rover(0,0,"n");
+		new Rover(0,0,"N");
 	}
+	
+	@Test
+	public void testNewRoverConstructorUpperCase() throws InvalidInputException{
+		Rover rover = new Rover(0,0,"n");
+		assertEquals(rover.move(""), "(0,0,N)");
+	}
+
 
 	@Test(expected=InvalidInputException.class)
 	public void testRoverOutOfPlanetBound() throws InvalidInputException{
 		int grid[][] = new int[10][10];
 		Planet planet = new Planet(grid);
-		Rover rover = new Rover(11, 11, "n", planet);
+		new Rover(11, 11, "n", planet);
 	}
 
 
 	@Test(expected=InvalidInputException.class)
 	public void testTurningException() throws InvalidInputException{
 		Rover rover = new Rover();
-		String changeDirection = rover.move("n");
+		rover.move("n");
 	}
 
 	@Test
 	public void testTurningLeft() throws InvalidInputException {
 		Rover rover = new Rover();
-		String changeDirection = rover.move("l");
+		rover.move("l");
 		String expectedOutput = "(0,0,W)";
 		assertEquals(expectedOutput, rover.move(""));
 	}
@@ -51,7 +58,7 @@ public class RoverTest {
 	public void testTurningLeft2() throws InvalidInputException {
 		Rover rover = new Rover();
 		rover.move("l");
-		String changeDirection = rover.move("l");
+		rover.move("l");
 		String expectedOutput = "(0,0,S)";
 		assertEquals(expectedOutput, rover.move(""));
 	}
@@ -59,7 +66,7 @@ public class RoverTest {
 	public void testTurningLeft3() throws InvalidInputException {
 		Rover rover = new Rover();
 		rover.move("l");rover.move("l");
-		String changeDirection = rover.move("l");
+		rover.move("l");
 		String expectedOutput = "(0,0,E)";
 		assertEquals(expectedOutput, rover.move(""));
 	}
@@ -68,7 +75,6 @@ public class RoverTest {
 		Rover rover = new Rover();
 		rover.move("l");rover.move("l");rover.move("l");
 		rover.move("l");
-		
 		String expectedOutput = "(0,0,N)";
 		assertEquals(expectedOutput, rover.move(""));
 	}
@@ -122,7 +128,7 @@ public class RoverTest {
 		String expectedOutput = "(9,9,S)";
 		assertEquals(expectedOutput, rover.move(""));
 	}
-	
+
 	@Test
 	public void testMovingForwardEEast() throws InvalidInputException{
 		int x[][] = new int [10][10]; 
@@ -132,8 +138,8 @@ public class RoverTest {
 		String expectedOutput = "(0,9,E)";
 		assertEquals(expectedOutput, rover.move(""));
 	}
-	
-	
+
+
 	@Test
 	public void testMovingForwardYIs0() throws InvalidInputException{
 		int x[][] = new int [10][10]; 
@@ -157,7 +163,7 @@ public class RoverTest {
 		int x[][] = new int [10][10]; 
 		Planet planet = new Planet(x);
 		Rover rover = new Rover(0, 0, "W", planet);
-		String moveForward = rover.move("f");
+		rover.move("f");
 		String expectedOutput = "(9,0,W)";
 		assertEquals(expectedOutput, rover.move(""));
 	}
@@ -167,7 +173,7 @@ public class RoverTest {
 		int x[][] = new int [10][10]; 
 		Planet planet = new Planet(x);
 		Rover rover = new Rover(0, 0, "E", planet);
-		String moveForward = rover.move("f");
+		rover.move("f");
 		String expectedOutput = "(1,0,E)";
 		assertEquals(expectedOutput, rover.move(""));
 	}
@@ -357,7 +363,7 @@ public class RoverTest {
 		Rover rover = new Rover(0,0,"N", planet);
 		assertEquals("(0,0,N)(0,1)", rover.move("f"));
 	}
-	
+
 	@Test(expected = InvalidInputException.class)
 	public void testMoreMoves() throws InvalidInputException{
 		int x[][] = new int[6][6];
@@ -366,9 +372,9 @@ public class RoverTest {
 		x[5][0] = 1;
 		Planet planet = new Planet(x);
 		Rover rover = new Rover(0,0,"N", planet);
-		String expe = rover.move("ffrfffrbbblllfrfrbbl aasf");
+		rover.move("ffrfffrbbblllfrfrbbl aasf");
 	}
-	
+
 
 
 
